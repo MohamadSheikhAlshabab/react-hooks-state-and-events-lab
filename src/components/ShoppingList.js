@@ -3,34 +3,22 @@ import Item from "./Item";
 
 function ShoppingList({ items }) {
   const [selectedCategory,setSelectedCategory] = useState('All')
-  const [filteredItems, setFilteredItems] = useState(items);
 
-  const filterItems = (category) => {
-    if (category === 'All') {
-      setFilteredItems(items); 
-    } else {
-      const filtered = items.filter(item => item.category === category);
-      setFilteredItems(filtered);
+  const filteredItems = items.filter(item => {
+    if(selectedCategory === 'All'){
+      return true
     }
-  };
+    return item.category === selectedCategory;
+  });
 
-  // function selectCategoryHandler(event){
-  //   const selectedItem = items.filter(item => item.category === event.target.value)
-  //   setFilteredItems(selectedItem)
-  // }
+  function selectCategoryHandler(event){
+    setFilteredItems(event.target.value)
+  }
 
   return (
     <div className="ShoppingList">
       <div className="Filter">
-        <select 
-        name="filter" 
-        value={selectedCategory} 
-        onChange={e => {
-          setSelectedCategory(e.target.value); 
-          filterItems(e.target.value);
-        }
-      } 
-        >
+        <select name="filter" onChange={selectedCategory}>
           <option value="All">Filter by category</option>
           <option value="Produce">Produce</option>
           <option value="Dairy">Dairy</option>
